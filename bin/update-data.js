@@ -24,9 +24,9 @@ function entryToProductRow(entry) {
   const raw = mapValues(entry, prop => prop[0]);
 
   // 10.00 EUR
-  const basePrice = parseFloat(raw.price);
-  const salePrice = parseFloat(raw.sale_price);
-  const currency = raw.price.split(' ').pop();
+  const basePrice = raw.price ? parseFloat(raw.price) : null;
+  const salePrice = raw.sale_price ? parseFloat(raw.sale_price) : null;
+  const currency = raw.price ? raw.price.split(' ').pop() : null;
 
   // Separate start date and and end date with /
   const salePriceDateStart = raw.sale_price_effective_date
@@ -66,7 +66,7 @@ function entryToProductRow(entry) {
     gtin: raw.gtin,
     mpn: raw.mpn,
     condition: raw.condition,
-    adult: Boolean(raw.adult),
+    adult: Boolean(raw.adult === 'yes'),
     multipack: raw.multipack ? parseInt(raw.multipack, 10) : null,
     is_bundle: Boolean(raw.is_bundle), // boolean
     energy_efficiency_class: raw.energy_efficiency_class,
