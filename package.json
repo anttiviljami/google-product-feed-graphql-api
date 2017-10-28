@@ -45,8 +45,8 @@
     "prettier": "^1.7.4"
   },
   "scripts": {
-    "dev": "postgraphql --watch --connection $DATABASE_URL --schema api --default-role api",
-    "start": "postgraphql --connection $DATABASE_URL --schema api --default-role api",
+    "dev": "postgraphql --watch --port $PORT --connection $DATABASE_URL --schema api --default-role api",
+    "start": "postgraphql --host 0.0.0.0 --port $PORT --connection $DATABASE_URL --schema api --default-role api",
     "migrate": "knex migrate:latest",
     "update-data": "node bin/update-data.js",
     "lint": "eslint .",
