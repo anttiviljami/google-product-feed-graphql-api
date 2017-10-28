@@ -1,4 +1,4 @@
-exports.up = function(knex, Promise) {
+exports.up = function up(knex, Promise) {
   // create a custom schema for postgraphql
   const api = knex.raw('CREATE SCHEMA api');
 
@@ -15,7 +15,7 @@ exports.up = function(knex, Promise) {
 		.then(() => products);
 };
 
-exports.down = function(knex, Promise) {
+exports.down = function down(knex, Promise) {
   return Promise.resolve(true)
     .then(() => knex.raw('DROP SCHEMA api'))
     .then(() => knex.schema.withSchema('api').dropTable('products'));
