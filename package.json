@@ -1,7 +1,7 @@
 {
   "name": "google-product-feed-graphql-api",
   "version": "0.1.0",
-  "description": "Load Google Product Feed XML into a database and serve via GraphQL API",
+  "description": "Load Google Product Feed XML into postgres and serve via GraphQL API",
   "author": "Viljami Kuosmanen <viljami@avoinsorsa.fi>",
   "main": "index.js",
   "license": "MIT",
