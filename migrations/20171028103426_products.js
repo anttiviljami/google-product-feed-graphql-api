@@ -1,6 +1,9 @@
 exports.up = function up(knex, Promise) {
   // create a custom schema for postgraphql
-  const api = knex.raw('CREATE SCHEMA api');
+  const api = Promise.resolve(true)
+    .then(() => knex.raw('create schema api'))
+    .then(() => knex.raw('create role api'))
+    .then(() => knex.raw('grant usage on schema api to api'))
 
   // products table
   // based on schema at https://support.google.com/merchants/answer/7052112?hl=en
@@ -108,7 +111,8 @@ exports.up = function up(knex, Promise) {
     
 		// updated_at and created_at timestamps
     table.timestamps(true, true);
-  });
+  }).then(() => knex.raw('grant select on api.products to api'));
+
   return Promise.resolve(true)
 		.then(() => api)
 		.then(() => products);
@@ -117,5 +121,6 @@ exports.up = function up(knex, Promise) {
 exports.down = function down(knex, Promise) {
   return Promise.resolve(true)
     .then(() => knex.schema.withSchema('api').dropTable('products'))
-    .then(() => knex.raw('DROP SCHEMA api'));
+    .then(() => knex.raw('drop role api'))
+    .then(() => knex.raw('drop schema api'));
 };
