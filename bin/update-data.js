@@ -6,7 +6,7 @@
  * and uses them to populate a Postgres database at DATABASE_URL
  */
 
-const { mapValues, flatMap } = require('lodash');
+const { map, mapValues, flatMap } = require('lodash');
 const Promise = require('bluebird');
 const axios = require('axios');
 const logger = require('winston');
@@ -95,19 +95,22 @@ function entryToProductRow(entry) {
 async function upsertProduct(row) {
   const { id } = row;
   try {
-    return Promise.resolve(true)
+    const res = await Promise.resolve(true)
       .then(() => knex.withSchema('api').table('products').insert(row))
       .tap(() => logger.info(`Added new product id ${id}`));
+    return res;
   } catch (err) {
-    return Promise.resolve(true)
+    const res = await Promise.resolve(true)
       .then(() => knex.withSchema('api').table('products').where({ id }).update(row))
       .tap(() => logger.info(`Updated product id ${id}`));
+    return res;
   }
 }
 
 async function main() {
   // product feed comma-separated URLs
   const urls = `${process.env.PRODUCT_FEED_URLS}`.split(',');
+  logger.info('Fetching product feeds from', urls.join(', '));
 
   // fetch xml feeds
   const getXMLFeed = url => axios.get(url, { responseType: 'xml' });
@@ -123,7 +126,13 @@ async function main() {
 
   // update to database
   await Promise.map(products, upsertProduct, { concurrency: 10 })
-  logger.info('Done');
+  logger.info(`Done! Updated ${products.length} products.`);
+
+  // Delete from database if not found in feeds
+  const ids = map(products, 'id')
+  const deleted = await knex.withSchema('api').table('products').delete().whereNotIn('id', ids);
+  logger.info(`Done! Deleted ${deleted} products.`);
+
   process.exit(0);
 }
 
