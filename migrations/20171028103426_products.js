@@ -94,6 +94,7 @@ exports.up = function up(knex, Promise) {
     table.string('item_group_id', 50);
 
     /* Shipping */
+
     // Your product's shipping cost [US:CA:Overnight:16.00 USD]
     table.string('shipping_price')
     // Label for your shipping method
@@ -106,9 +107,14 @@ exports.up = function up(knex, Promise) {
     table.string('shipping_​​height');
     
     /* Tax */
+
     // Your product’s sales tax rate in percent (if not included in price)
     table.string('tax');
-    
+
+    /* Non-google derived fields */
+
+    // Raw product data, as imported from the feed
+    table.jsonb('raw');
 		// updated_at and created_at timestamps
     table.timestamps(true, true);
   }).then(() => knex.raw('grant select on api.products to api'));
