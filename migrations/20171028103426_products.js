@@ -30,7 +30,7 @@ exports.up = function up(knex, Promise) {
     // availability [in stock, out of stock, preorder]
     table.string('availability').defaultTo('in stock');
     // The date a pre-ordered product becomes available for delivery
-    table.date('availability_​​date');
+    table.date('availability_date');
     // The date that your product should stop showing
     table.date('expiration_date');
     // numeric price (parsed from source data)
@@ -40,17 +40,17 @@ exports.up = function up(knex, Promise) {
     // ISO 4217 currency (parsed from source data)
     table.string('currency');
     // The date range during which the product’s sale_price applies
-    table.date('sale_​​price_​​effective_​​date_start');
-    table.date('sale_​​price_​​effective_​​date_end');
+    table.date('sale_price_effective_date_start');
+    table.date('sale_price_effective_date_end');
     // measure or dimension of the product without packaging 
-    table.string('unit_​​pricing_​​measure');
-    table.string('unit_​​pricing_​​base_​​measure');
+    table.string('unit_pricing_measure');
+    table.string('unit_pricing_base_measure');
 
     /* Product category */
 
     // Google-defined product category
     // see: https://support.google.com/merchants/answer/1705911
-    table.string('google_​​product_​​category');
+    table.string('google_product_category');
     // optional category
     table.string('product_type', 750);
 
@@ -73,9 +73,9 @@ exports.up = function up(knex, Promise) {
     // If you're selling a custom bundle of different products that you created, and the bundle includes a main product
     table.boolean('is_bundle').defaultTo(false);
     // Your product’s energy label [G, F, E, D, C, B, A, A+, A++, A+++]
-    table.string('energy_​​efficiency_​​class');
+    table.string('energy_efficiency_class');
     // Product's targeted age group [infant, toddler, kids, adult]
-    table.string('age_​​group');
+    table.string('age_group');
     // Your product’s color(s)
     table.string('color', 100);
     // Your product’s targeted gender 
@@ -89,7 +89,7 @@ exports.up = function up(knex, Promise) {
     // Your product's size type [regular, petite, plus, big and tall, maternity]
     table.string('size_type');
     // The country of the size system used by your product [US, UK, EU, DE, FR, JP, CN (China), IT, BR, MEX, AU]
-    table.string('size_​​system')
+    table.string('size_system')
     // ID for a group of products that come in different versions (variants). Use the parent SKU where possible 
     table.string('item_group_id', 50);
 
@@ -100,11 +100,11 @@ exports.up = function up(knex, Promise) {
     // Label for your shipping method
     table.string('shipping_label', 100);
     // The weight of the product used to calculate the shipping cost e.g. "3 kg"
-    table.string('shipping_​​weight');
+    table.string('shipping_weight');
     // Dimensions used to calculate the shipping costs
-    table.string('shipping_​​length');
-    table.string('shipping_​​width');
-    table.string('shipping_​​height');
+    table.string('shipping_length');
+    table.string('shipping_width');
+    table.string('shipping_height');
     
     /* Tax */
 
