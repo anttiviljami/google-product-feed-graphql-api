@@ -1,5 +1,9 @@
 exports.up = function(knex, Promise) {
-  const products = knex.schema.createTable('products', table => {
+  // create a custom schema for postgraphql
+  const api = knex.raw('CREATE SCHEMA api');
+
+  // products table
+  const products = knex.schema.withSchema('api').createTable('products', table => {
 		// internal product id
     table.increments('id').unsigned().primary();
 
@@ -7,10 +11,12 @@ exports.up = function(knex, Promise) {
     table.timestamps(true, true);
   });
   return Promise.resolve(true)
+		.then(() => api)
 		.then(() => products);
 };
 
 exports.down = function(knex, Promise) {
   return Promise.resolve(true)
-    .then(() => knex.schema.dropTable('products'));
+    .then(() => knex.raw('DROP SCHEMA api'))
+    .then(() => knex.schema.withSchema('api').dropTable('products'));
 };
