@@ -3,7 +3,8 @@ exports.up = function up(knex, Promise) {
   const api = Promise.resolve(true)
     .then(() => knex.raw('create schema api'))
     .then(() => knex.raw('create role api'))
-    .then(() => knex.raw('grant usage on schema api to api'))
+    .then(() => knex.raw('grant api to postgres'))
+    .then(() => knex.raw('grant usage on schema api to api'));
 
   // products table
   // based on schema at https://support.google.com/merchants/answer/7052112?hl=en
