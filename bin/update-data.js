@@ -96,12 +96,12 @@ async function upsertProduct(row) {
   const { id } = row;
   try {
     return Promise.resolve(true)
-      .then(() => knex.withSchema('api').table('products').where({ id }).update(row))
-      .tap(res => logger.info(`Updated product id ${id}. Detail:`, res));
-  } catch (err) {
-    return Promise.resolve(true)
       .then(() => knex.withSchema('api').table('products').insert(row))
       .tap(() => logger.info(`Added new product id ${id}`));
+  } catch (err) {
+    return Promise.resolve(true)
+      .then(() => knex.withSchema('api').table('products').where({ id }).update(row))
+      .tap(() => logger.info(`Updated product id ${id}`));
   }
 }
 
