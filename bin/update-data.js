@@ -24,8 +24,8 @@ function entryToProductRow(entry) {
   const raw = mapValues(entry, prop => prop[0]);
 
   // 10.00 EUR
-  const basePrice = Number(raw.price);
-  const salePrice = Number(raw.sale_price);
+  const basePrice = parseFloat(raw.price);
+  const salePrice = parseFloat(raw.sale_price);
   const currency = raw.price.split(' ').pop();
 
   // Separate start date and and end date with /
@@ -120,7 +120,6 @@ async function main() {
 
   // get products from feed
   const products = flatMap(feedData, xml => xml.feed.entry).map(entryToProductRow);
-  logger.info(JSON.stringify(products[0]));
 
   // update to database
   await Promise.map(products, upsertProduct, { concurrency: 10 })
