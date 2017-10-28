@@ -15,7 +15,7 @@ exports.up = function up(knex, Promise) {
     // product title
     table.string('title', 150).notNullable();
     // product description (max chars: 5000)
-    table.string('description', 5000);
+    table.text('description');
     // product link
     table.string('link', 2000).notNullable();
     // optional product mobile link
@@ -115,6 +115,8 @@ exports.up = function up(knex, Promise) {
 
     // Raw product data, as imported from the feed
     table.jsonb('raw');
+    table.text('xml');
+
 		// updated_at and created_at timestamps
     table.timestamps(true, true);
   }).then(() => knex.raw('grant select on api.products to api'));
