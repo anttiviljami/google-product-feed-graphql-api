@@ -127,6 +127,6 @@ exports.up = function up(knex, Promise) {
 exports.down = function down(knex, Promise) {
   return Promise.resolve(true)
     .then(() => knex.schema.withSchema('api').dropTable('products'))
-    .then(() => knex.raw('drop role api'))
-    .then(() => knex.raw('drop schema api'));
+    .then(() => knex.raw('drop schema api'))
+    .then(() => knex.raw('drop role api'));
 };
