@@ -1,0 +1,32 @@
+{
+  "name": "google-product-feed-graphql-api",
+  "version": "0.1.0",
+  "description": "Load Google Product Feed XML into a database and serve via GraphQL API",
+  "author": "Viljami Kuosmanen <viljami@avoinsorsa.fi>",
+  "main": "index.js",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/anttiviljami/google-product-feed-api/issues"
+  },
+  "homepage": "https://github.com/anttiviljami/google-product-feed-api#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anttiviljami/google-product-feed-api.git"
+  },
+  "keywords": [
+    "google",
+    "product",
+    "feed",
+    "xml",
+    "api"
+  ],
+  "dependencies": {
+    "knex": "^0.13.0",
+    "postgraphql": "^3.5.0"
+  },
+  "scripts": {
+    "dev": "postgraphql --watch --connection $DATABASE_URL",
+    "start": "postgraphql --connection $DATABASE_URL",
+    "migrate": "knex migrate:latest"
+  }
+}
